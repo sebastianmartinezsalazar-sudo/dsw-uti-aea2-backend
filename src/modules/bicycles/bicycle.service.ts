@@ -42,4 +42,23 @@ export class BicycleService {
   static async delete(bicycle: Bicycle) {
     await bicycle.destroy();
   }
+
+  static async search(filters: {
+    brandId?: number;
+    minPrice?: number;
+    maxPrice?: number;
+    model?: string;
+  }) {
+    const where: any = {};
+
+    if (filters.brandId) where.brandId = filters.brandId;
+    if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
+      where.price = {};
+      if (filters.minPrice !== undefined) where.price.$gte = filters.minPrice;
+      if (filters.maxPrice !== undefined) where.price.$lte = filters.maxPrice;
+    }
+    if (filters.model) where.model = { [require('sequelize').Op.like]: `%${filters.model}%` };
+
+    return Bicycle.findAll({ where });
+  }
 }

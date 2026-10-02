@@ -6,6 +6,9 @@ import { defineAssociations } from "./models/associations";
 // Importamos los modelos para que Sequelize los registre.
 import "./modules/bicycles/bicycle.model";
 import "./modules/brands/brand.model";
+import "./modules/customers/customer.model";
+import "./modules/orders/order.model";
+import "./modules/order-items/order-item.model";
 
 async function startServer() {
   try {

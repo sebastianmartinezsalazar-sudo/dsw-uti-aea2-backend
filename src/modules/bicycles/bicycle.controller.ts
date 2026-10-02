@@ -133,4 +133,21 @@ export class BicycleController {
       next(error);
     }
   }
+    static async search(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { brandId, minPrice, maxPrice, model } = req.query;
+
+      const filters = {
+        brandId: brandId ? Number(brandId) : undefined,
+        minPrice: minPrice ? Number(minPrice) : undefined,
+        maxPrice: maxPrice ? Number(maxPrice) : undefined,
+        model: model ? String(model) : undefined,
+      };
+
+      const bicycles = await BicycleService.search(filters);
+      res.json(bicycles);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
