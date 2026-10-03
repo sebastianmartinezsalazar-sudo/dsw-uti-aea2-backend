@@ -25,12 +25,16 @@ export class BicycleController {
   ) {
     try {
       const id = Number(req.params.id);
+      if (isNaN(id) || id <= 0) {
+  res.status(400).json({ message: "Invalid ID" });
+  return;
+      }
 
       const bicycle = await BicycleService.findById(id);
 
       if (!bicycle) {
         res.status(404).json({
-          message: "Bicicleta no encontrada",
+          message: "Bicycle not found",
         });
 
         return;
@@ -54,7 +58,7 @@ export class BicycleController {
 
       if (!brandId || !model || price === undefined) {
         res.status(400).json({
-          message: "brand, model y price son obligatorios",
+          message: "brandId, model and price are required",
         });
 
         return;
@@ -84,11 +88,16 @@ export class BicycleController {
     try {
       const id = Number(req.params.id);
 
+      if (isNaN(id) || id <= 0) {
+  res.status(400).json({ message: "Invalid ID" });
+  return;
+      }
+
       const bicycle = await BicycleService.findById(id);
 
       if (!bicycle) {
         res.status(404).json({
-          message: "Bicicleta no encontrada",
+          message: "Bicycle not found",
         });
 
         return;
@@ -114,12 +123,16 @@ export class BicycleController {
   ) {
     try {
       const id = Number(req.params.id);
+      if (isNaN(id) || id <= 0) {
+  res.status(400).json({ message: "Invalid ID" });
+  return;
+      }
 
       const bicycle = await BicycleService.findById(id);
 
       if (!bicycle) {
         res.status(404).json({
-          message: "Bicicleta no encontrada",
+          message: "Bicycle not found",
         });
 
         return;
@@ -135,17 +148,36 @@ export class BicycleController {
   }
     static async search(req: Request, res: Response, next: NextFunction) {
     try {
-      const { brandId, minPrice, maxPrice, model } = req.query;
-
-      const filters = {
-        brandId: brandId ? Number(brandId) : undefined,
-        minPrice: minPrice ? Number(minPrice) : undefined,
-        maxPrice: maxPrice ? Number(maxPrice) : undefined,
-        model: model ? String(model) : undefined,
+      const filters: any = {
+        text: typeof req.query.text === "string" ? req.query.text.trim() : undefined,
+        brand: typeof req.query.brand === "string" ? req.query.brand.trim() : undefined,
+        material: typeof req.query.material === "string" ? req.query.material : undefined,
+        minPrice: req.query.minPrice !== undefined ? Number(req.query.minPrice) : undefined,
+        maxPrice: req.query.maxPrice !== undefined ? Number(req.query.maxPrice) : undefined,
+        inStock: req.query.inStock === "true",
       };
 
-      const bicycles = await BicycleService.search(filters);
-      res.json(bicycles);
+      if (filters.minPrice !== undefined && isNaN(filters.minPrice)) {
+        res.status(400).json({ message: "minPrice must be a number" });
+        return;
+      }
+      if (filters.maxPrice !== undefined && isNaN(filters.maxPrice)) {
+        res.status(400).json({ message: "maxPrice must be a number" });
+        return;
+      }
+      if (filters.minPrice !== undefined && filters.maxPrice !== undefined && filters.minPrice > filters.maxPrice) {
+        res.status(400).json({ message: "minPrice cannot exceed maxPrice" });
+        return;
+      }
+
+      const allowedSort = new Set(["price", "model", "stock", "createdAt", "id"]);
+      const sort = typeof req.query.sort === "string" && allowedSort.has(req.query.sort) ? req.query.sort : "id";
+      const direction = req.query.direction === "desc" ? "DESC" : "ASC";
+      const page = Math.max(1, Number(req.query.page) || 1);
+      const limit = Math.min(50, Math.max(1, Number(req.query.limit) || 10));
+
+      const result = await BicycleService.searchPaged(filters, { page, limit, sort, direction });
+      res.json(result);
     } catch (error) {
       next(error);
     }

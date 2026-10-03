@@ -3,7 +3,7 @@ import { Brand } from '../modules/brands/brand.model';
 import { Customer } from '../modules/customers/customer.model';
 import { Order } from '../modules/orders/order.model';
 import { OrderItem } from '../modules/order-items/order-item.model';
-
+import { BicycleDetail } from '../modules/bicycle-details/bicycle-detail.model';
 export function defineAssociations() {
   // 1:N Brand - Bicycle
   Brand.hasMany(Bicycle, { foreignKey: 'brandId', as: 'bicycles' });
@@ -34,4 +34,7 @@ export function defineAssociations() {
 
   Bicycle.hasMany(OrderItem, { foreignKey: 'bicycleId', as: 'orderItems' });
   OrderItem.belongsTo(Bicycle, { foreignKey: 'bicycleId', as: 'bicycle' });
+
+  Bicycle.hasOne(BicycleDetail, { foreignKey: "bicycleId", as: "detail", onDelete: "CASCADE" });
+BicycleDetail.belongsTo(Bicycle, { foreignKey: "bicycleId", as: "bicycle" });
 }
