@@ -17,7 +17,6 @@ export class CustomerController {
     }
   }
 
-
   static async getById(
     req: Request,
     res: Response,
@@ -43,7 +42,6 @@ export class CustomerController {
     }
   }
 
-
   static async create(
     req: Request,
     res: Response,
@@ -54,7 +52,7 @@ export class CustomerController {
 
       if (!name || !email) {
         res.status(400).json({
-          message: "El name y el email son obligatorios",
+          message: "the name and email is obligations",
         });
 
         return;
@@ -72,7 +70,6 @@ export class CustomerController {
     }
   }
 
-
   static async update(
     req: Request,
     res: Response,
@@ -85,7 +82,7 @@ export class CustomerController {
 
       if (!customer) {
         res.status(404).json({
-          message: "Cliente no encontrado",
+          message: "customer not found",
         });
 
         return;
@@ -103,7 +100,6 @@ export class CustomerController {
     }
   }
 
-
   static async delete(
     req: Request,
     res: Response,
@@ -116,7 +112,7 @@ export class CustomerController {
 
       if (!customer) {
         res.status(404).json({
-          message: "Cliente no encontrado",
+          message: "customer not found",
         });
 
         return;
@@ -131,16 +127,23 @@ export class CustomerController {
     }
   }
 
-
-  static async getCustomersByBrand(
+  static async getCustomerWithOrdersByNameSearch(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
     try {
-      const  brandName  = req.params.brandName as string;
+      const nameSearch = String(req.params.name_search);
 
-      const customers = await CustomerService.findCustomersByBrand(brandName);
+      const customers = await CustomerService.findCustomersWithOrdersByNameSearch(nameSearch);
+
+      if (customers.length === 0) {
+        res.status(404).json({
+          message: "No customers found with that name",
+        });
+
+        return;
+      }
 
       res.json(customers);
 

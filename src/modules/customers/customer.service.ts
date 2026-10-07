@@ -1,8 +1,6 @@
 import { Customer } from "./customer.model";
 import { Order } from "../orders/order.model";
-import { OrderItem } from "../order-items/order-item.model";
-import { Bicycle } from "../bicycles/bicycle.model";
-import { Brand } from "../brands/brand.model";
+import { Op } from "sequelize";
 
 export class CustomerService {
 
@@ -15,6 +13,7 @@ export class CustomerService {
   static async findById(id: number) {
     return Customer.findByPk(id);
   }
+
 
   static async create(data: {
     name: string;
@@ -35,39 +34,11 @@ export class CustomerService {
     await customer.destroy();
   }
 
-  // Consulta 6.4: Clientes que compraron una marca
-  static async findCustomersByBrand(brandName: string) {
+
+  static async findCustomersWithOrdersByNameSearch(nameSearch: string) {
     return Customer.findAll({
-      include: [
-        {
-          model: Order,
-          as: "orders",
-          required: true,
-          include: [
-            {
-              model: OrderItem,
-              as: "items",
-              required: true,
-              include: [
-                {
-                  model: Bicycle,
-                  as: "bicycle",
-                  required: true,
-                  include: [
-                    {
-                      model: Brand,
-                      as: "brand",
-                      where: { name: brandName },
-                      required: true,
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-      distinct: true,
-    } as any);
+      where: {name: { [Op.like]: `%${nameSearch}%` }},
+      include: [{model: Order,as: "orders",required: true}],
+    });
   }
 }

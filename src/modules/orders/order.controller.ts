@@ -30,7 +30,7 @@ export class OrderController {
 
       if (!order) {
         res.status(404).json({
-          message: "Pedido no encontrada",
+          message: "Order not found",
         });
 
         return;
@@ -54,7 +54,7 @@ export class OrderController {
 
       if (!customerId) {
         res.status(400).json({
-          message: "El customerId es obligatorio",
+          message: "the customerId is obligation",
         });
 
         return;
@@ -85,7 +85,7 @@ export class OrderController {
 
       if (!order) {
         res.status(404).json({
-          message: "Pedido no encontrada",
+          message: "Order not found",
         });
 
         return;
@@ -116,7 +116,7 @@ export class OrderController {
 
       if (!order) {
         res.status(404).json({
-          message: "Orden no encontrada",
+          message: "Order not found",
         });
 
         return;
@@ -130,16 +130,18 @@ export class OrderController {
       next(error);
     }
   }
-    static async getOrdersByBrand(
+   
+  static async getByCustomerId(
     req: Request,
     res: Response,
     next: NextFunction
-  ) {
+  ){
     try {
-      const  brandName  = req.params.brandName as string;
-      const orders = await OrderService.findOrdersByBrand(brandName);
+      const customerId = Number(req.params.id);
+      const orders = await OrderService.findByCustomerId(customerId);
+
       res.json(orders);
-    } catch (error) {
+    }catch(error){
       next(error);
     }
   }

@@ -1,5 +1,11 @@
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
-import { sequelize } from '../../config/database'; // ⚠️ Ajusta esta ruta a la que uses en tus otros modelos
+import {
+  CreationOptional,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from 'sequelize';
+import { sequelize } from '../../config/database'; //  Ajusta esta ruta a la que uses en tus otros modelos
 
 export class Order extends Model<
   InferAttributes<Order>,
@@ -9,6 +15,9 @@ export class Order extends Model<
   declare customerId: number;
   declare orderDate: CreationOptional<Date>;
   declare status: CreationOptional<'pending' | 'paid' | 'shipped' | 'cancelled'>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
+
 }
 
 Order.init(
@@ -32,10 +41,12 @@ Order.init(
       allowNull: false,
       defaultValue: 'pending',
     },
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   },
   {
     sequelize,
     tableName: 'orders',
-    modelName: 'Order',
+    timestamps: true,
   }
 );

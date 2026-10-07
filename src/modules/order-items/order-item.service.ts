@@ -1,7 +1,6 @@
 import { OrderItem } from "./order-item.model";
 
 export class OrderItemService {
-
   static async findAll() {
     return OrderItem.findAll({ order: [["id", "ASC"]] });
   }
@@ -10,26 +9,15 @@ export class OrderItemService {
     return OrderItem.findByPk(id);
   }
 
-  static async create(data: {
-    orderId: number;
-    bicycleId: number;
-    quantity: number;
-    unitPrice: number;
-  }) {
+  static async create(data: any) {
     return OrderItem.create(data);
   }
 
-  static async update(orderItem: OrderItem, data: {
-    orderId?: number;
-    bicycleId?: number;
-    quantity?: number;
-    unitPrice?: number;
-  }): Promise<OrderItem> {
-    await orderItem.update(data);
-    return orderItem;
+  static async update(item: OrderItem, data: any) {
+    return item.update(data);
   }
 
-  static async delete(orderItem: OrderItem) {
-    await orderItem.destroy();
+  static async delete(item: OrderItem) {
+    await item.destroy();
   }
 }

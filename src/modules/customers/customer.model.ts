@@ -1,4 +1,10 @@
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
+import { CreationOptional, 
+  DataTypes, 
+  InferAttributes,
+  InferCreationAttributes, 
+  Model 
+} from 'sequelize';
+
 import { sequelize } from '../../config/database'; // Ajusta esta ruta a la que uses en tus otros modelos
 
 export class Customer extends Model<

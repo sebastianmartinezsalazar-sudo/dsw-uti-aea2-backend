@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { OrderItemService } from "./order-item.service";
 
 export class OrderItemController {
-
+  
   static async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const items = await OrderItemService.findAll();
@@ -16,12 +16,10 @@ export class OrderItemController {
     try {
       const id = Number(req.params.id);
       const item = await OrderItemService.findById(id);
-
       if (!item) {
-        res.status(404).json({ message: "Item no encontrado" });
+        res.status(404).json({ message: "Order item not found" });
         return;
       }
-
       res.json(item);
     } catch (error) {
       next(error);
@@ -31,12 +29,10 @@ export class OrderItemController {
   static async create(req: Request, res: Response, next: NextFunction) {
     try {
       const { orderId, bicycleId, quantity, unitPrice } = req.body;
-
       if (!orderId || !bicycleId || !quantity || !unitPrice) {
-        res.status(400).json({ message: "Todos los campos son obligatorios" });
+        res.status(400).json({ message: "All fields are required" });
         return;
       }
-
       const item = await OrderItemService.create({ orderId, bicycleId, quantity, unitPrice });
       res.status(201).json(item);
     } catch (error) {
@@ -48,14 +44,12 @@ export class OrderItemController {
     try {
       const id = Number(req.params.id);
       const item = await OrderItemService.findById(id);
-
       if (!item) {
-        res.status(404).json({ message: "Item no encontrado" });
+        res.status(404).json({ message: "Order item not found" });
         return;
       }
-
-      const updatedItem = await OrderItemService.update(item, req.body);
-      res.json(updatedItem);
+      const updated = await OrderItemService.update(item, req.body);
+      res.json(updated);
     } catch (error) {
       next(error);
     }
@@ -65,12 +59,10 @@ export class OrderItemController {
     try {
       const id = Number(req.params.id);
       const item = await OrderItemService.findById(id);
-
       if (!item) {
-        res.status(404).json({ message: "Item no encontrado" });
+        res.status(404).json({ message: "Order item not found" });
         return;
       }
-
       await OrderItemService.delete(item);
       res.status(204).send();
     } catch (error) {
