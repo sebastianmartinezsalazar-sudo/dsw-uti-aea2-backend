@@ -16,7 +16,8 @@ Backend API for a bicycle shop built with TypeScript, Express, Sequelize, and My
 
 ## 🔗 Recommended Links
 
-- **[Postman Collection Documentation](https://sebastianmartinezsalazar-4517765.postman.co/workspace/fb94b0b1-be51-4adb-8e4c-2272eb320e08/documentation/58320382-3ecd9c68-82bf-4ae0-8c60-36e268b96d1e)**
+- ## API Collection
+[API Collection (Bruno/Postman)](https://github.com/sebastianmartinezsalazar-sudo/dsw-uti-aea2-backend/tree/entrega-4/api-collection)
 
 ## 🛠️ Installation
 

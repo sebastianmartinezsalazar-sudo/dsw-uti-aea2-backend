@@ -1,0 +1,31 @@
+info:
+  name: http://localhost:3000/api/bicycles_3
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: http://localhost:3000/api/bicycles
+  body:
+    type: json
+    data: "{\r
+
+      \  \"brandId\": 3,\r
+
+      \  \"model\": \"Mountain Pro\",\r
+
+      \  \"description\": \"Bicicleta de montaña\",\r
+
+      \  \"price\": 500,\r
+
+      \  \"stock\": 10\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

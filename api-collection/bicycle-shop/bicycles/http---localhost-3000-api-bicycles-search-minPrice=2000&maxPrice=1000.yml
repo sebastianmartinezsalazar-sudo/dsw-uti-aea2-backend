@@ -1,0 +1,23 @@
+info:
+  name: http://localhost:3000/api/bicycles/search?minPrice=2000&maxPrice=1000
+  type: http
+  seq: 9
+
+http:
+  method: GET
+  url: http://localhost:3000/api/bicycles/search?minPrice=2000&maxPrice=1000
+  params:
+    - name: minPrice
+      value: "2000"
+      type: query
+    - name: maxPrice
+      value: "1000"
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

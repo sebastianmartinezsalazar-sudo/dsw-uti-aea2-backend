@@ -1,0 +1,31 @@
+info:
+  name: http://localhost:3000/api/bicycles_1
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:3000/api/bicycles
+  body:
+    type: json
+    data: "{\r
+
+      \    \"brandId\": 1,\r
+
+      \    \"model\": \"naked\",\r
+
+      \    \"description\": \"muy buena\",\r
+
+      \    \"price\": 10.50,\r
+
+      \    \"stock\": 3\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
