@@ -1,0 +1,38 @@
+info:
+  name: http://localhost:3000/api/bicycles/search?brand=Trek&material=Carbon&maxPrice=2000&sort=price&direction=asc&page=1&limit=5
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: http://localhost:3000/api/bicycles/search?brand=Trek&material=Carbon&maxPrice=2000&sort=price&direction=asc&page=1&limit=5
+  params:
+    - name: brand
+      value: Trek
+      type: query
+    - name: material
+      value: Carbon
+      type: query
+    - name: maxPrice
+      value: "2000"
+      type: query
+    - name: sort
+      value: price
+      type: query
+    - name: direction
+      value: asc
+      type: query
+    - name: page
+      value: "1"
+      type: query
+    - name: limit
+      value: "5"
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

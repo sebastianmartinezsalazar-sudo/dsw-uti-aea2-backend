@@ -1,5 +1,8 @@
 import { Order } from "./order.model";
 import { Customer } from "../customers/customer.model";
+import { OrderItem } from "../order-items/order-item.model";
+import { Bicycle } from "../bicycles/bicycle.model";
+import { Brand } from "../brands/brand.model";
 
 export class OrderService {
 
@@ -30,6 +33,23 @@ export class OrderService {
     return Order.findAll({
       where: { customerId },
       include: [{model: Customer,as: "customer",attributes:["id", "name", "email"]}],
+      order: [["orderDate", "DESC"]],
+    });
+  }
+
+  // pedidos con bicicletas de una marca concreta
+
+  static async findOrderWithBicyclesByBrand (brandName: string){
+    return Order.findAll({
+      include: [{model: Customer,as: "customer",},{model: OrderItem, as: "items", 
+        required: true,
+        include: [{model: Bicycle, as: "bicycle",
+          include: [{model: Brand, as: "brand", 
+            where: {name: brandName}, required: true,
+          },],
+        },],
+       },
+      ],
       order: [["orderDate", "DESC"]],
     });
   }

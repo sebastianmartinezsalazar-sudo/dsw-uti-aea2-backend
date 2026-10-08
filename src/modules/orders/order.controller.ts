@@ -145,4 +145,23 @@ export class OrderController {
       next(error);
     }
   }
+  static async getOrdersWithBicyclesByBrand(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ){
+    try {
+      const brandName = String (req.params.brandName);
+      const orders = await OrderService.findOrderWithBicyclesByBrand(brandName);
+
+      if (orders.length === 0){
+        res.status(404).json({message: "No orders found for this brand"});
+        return;
+
+      }
+      res.json(orders);
+    }catch (error) {
+      next(error);
+    }
+  }
 }

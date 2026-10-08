@@ -14,6 +14,14 @@ Backend API for a bicycle shop built with TypeScript, Express, Sequelize, and My
 - **Transactions**: Atomic order creation with automatic stock decrement and historical price recording.
 - **Data Validation**: Robust input validation and proper HTTP status codes.
 
+- ## Custom Query (Entrega 5)
+
+### GET /api/orders/brand/:brandName
+
+Retrieves all orders containing bicycles from a specific brand. This query involves three models: Order, OrderItem, and Bicycle.
+
+**Example:**
+
 ## 🔗 Recommended Links
 
 - ## API Collection

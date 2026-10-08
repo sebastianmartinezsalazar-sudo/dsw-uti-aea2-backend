@@ -4,6 +4,7 @@ import { OrderController } from "./order.controller";
 const router = Router();
 
 router.get("/", OrderController.getAll);
+router.get("/brand/:brandName", OrderController.getOrdersWithBicyclesByBrand);
 router.get("/customers/:id", OrderController.getByCustomerId);
 router.get("/:id", OrderController.getById);
 router.post("/", OrderController.create);

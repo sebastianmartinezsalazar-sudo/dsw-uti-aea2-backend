@@ -1,0 +1,23 @@
+info:
+  name: http://localhost:3000/api/customers
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: http://localhost:3000/api/customers
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Tiburcio Cruz Ravelo",
+        "email": "tiburciocruz@ieselrincon.es"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

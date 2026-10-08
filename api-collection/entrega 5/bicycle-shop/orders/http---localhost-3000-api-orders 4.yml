@@ -1,0 +1,27 @@
+info:
+  name: http://localhost:3000/api/orders
+  type: http
+  seq: 12
+
+http:
+  method: POST
+  url: http://localhost:3000/api/orders
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "customerId": 4,
+        "orderDate": "2026-10-08",
+        "status": "paid"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

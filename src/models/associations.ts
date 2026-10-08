@@ -14,19 +14,7 @@ export function defineAssociations() {
   Order.belongsTo(Customer, { foreignKey: 'customerId', as: 'customer' });
 
   // N:M Order - Bicycle a través de OrderItem
-  Order.belongsToMany(Bicycle, {
-    through: OrderItem,
-    foreignKey: 'orderId',
-    otherKey: 'bicycleId',
-    as: 'bicycles',
-  });
-
-  Bicycle.belongsToMany(Order, {
-    through: OrderItem,
-    foreignKey: 'bicycleId',
-    otherKey: 'orderId',
-    as: 'orders',
-  });
+  
 
   // Relaciones de la tabla intermedia
   Order.hasMany(OrderItem, { foreignKey: 'orderId', as: 'items' });
@@ -36,5 +24,5 @@ export function defineAssociations() {
   OrderItem.belongsTo(Bicycle, { foreignKey: 'bicycleId', as: 'bicycle' });
 
   Bicycle.hasOne(BicycleDetail, { foreignKey: "bicycleId", as: "detail", onDelete: "CASCADE" });
-BicycleDetail.belongsTo(Bicycle, { foreignKey: "bicycleId", as: "bicycle" });
+  BicycleDetail.belongsTo(Bicycle, { foreignKey: "bicycleId", as: "bicycle" });
 }

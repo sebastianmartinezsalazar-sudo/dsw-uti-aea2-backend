@@ -1,0 +1,26 @@
+info:
+  name: http://localhost:3000/api/bicycles
+  type: http
+  seq: 11
+
+http:
+  method: POST
+  url: http://localhost:3000/api/bicycles
+  body:
+    type: json
+    data: |-
+      {
+        "model": "Trek Domane",
+        "description": "Road bike",
+        "price": 1500.00,
+        "stock": 10,
+        "brandId": 3
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
