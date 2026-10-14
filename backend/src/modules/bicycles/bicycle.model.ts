@@ -27,6 +27,8 @@ export class Bicycle extends Model<
   declare createdAt: CreationOptional<Date>;
 
   declare updatedAt: CreationOptional<Date>;
+
+  declare weigth: number;
 }
 
 Bicycle.init(
@@ -40,9 +42,9 @@ Bicycle.init(
     brandId: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
-      references: {model: "brands", key: "id"},
-      onUpdate:"CASCADE",
-      onDelete:"RESTRICT",
+      references: { model: "brands", key: "id" },
+      onUpdate: "CASCADE",
+      onDelete: "RESTRICT",
     },
 
     model: {
@@ -65,6 +67,14 @@ Bicycle.init(
       allowNull: false,
       defaultValue: 0,
     },
+
+    weigth: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+    
+    },
+
+
 
     createdAt: DataTypes.DATE,
 

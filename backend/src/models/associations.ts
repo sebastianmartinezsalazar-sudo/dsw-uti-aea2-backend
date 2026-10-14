@@ -1,9 +1,10 @@
-import { Bicycle } from '../modules/bicycles/bicycle.model';
-import { Brand } from '../modules/brands/brand.model';
-import { Customer } from '../modules/customers/customer.model';
-import { Order } from '../modules/orders/order.model';
-import { OrderItem } from '../modules/order-items/order-item.model';
-import { BicycleDetail } from '../modules/bicycle-details/bicycle-detail.model';
+import { Bicycle } from '../modules/bicycles/bicycle.model.ts';
+import { Brand } from '../modules/brands/brand.model.ts';
+import { Customer } from '../modules/customers/customer.model.ts';
+import { Order } from '../modules/orders/order.model.ts';
+import { OrderItem } from '../modules/order-items/order-item.model.ts';
+import { BicycleDetail } from '../modules/bicycle-details/bicycle-detail.model.ts';
+import {Models} from '../modules/models/model.model.ts';
 export function defineAssociations() {
   // 1:N Brand - Bicycle
   Brand.hasMany(Bicycle, { foreignKey: 'brandId', as: 'bicycles' });
@@ -25,4 +26,11 @@ export function defineAssociations() {
 
   Bicycle.hasOne(BicycleDetail, { foreignKey: "bicycleId", as: "detail", onDelete: "CASCADE" });
   BicycleDetail.belongsTo(Bicycle, { foreignKey: "bicycleId", as: "bicycle" });
+
+// 1:N models - bicycles - PreExamen
+
+Models.hasMany(Bicycle, {foreignKey: 'modelId', as: 'bicycles'});
+Bicycle.belongsTo (Models, {foreignKey: 'modelId', as: 'bicycleModel'});
+
+
 }

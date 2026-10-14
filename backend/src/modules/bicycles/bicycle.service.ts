@@ -1,6 +1,36 @@
-import { Bicycle } from "./bicycle.model";
+import { Bicycle } from "./bicycle.model.ts";
+import { Models } from "../models/model.model.ts";
+import {Brand} from "../brands/brand.model.ts";
+import { Op } from "sequelize";
 
 export class BicycleService {
+
+  static async findByPriceAbove100(){
+    return Bicycle.findAll({
+      where: {
+        price: {[Op.gt]: 100 }
+      }
+    });
+  }
+
+  static async findByPriceAndWeigth(){
+    return Bicycle.findAll({
+      where:{
+        price: {[Op.lt]: 100},
+        weigth: {[Op.gt]: 20}
+      }
+    })
+  }
+
+
+  static async findAllWithBrandAndModel(){
+    return Bicycle.findAll({
+      include: [
+        {model: Brand, as: "brand"},
+        {model: Models, as: "bicycleModel"}
+      ]
+    });
+  }
 
   static async findAll() {
     return Bicycle.findAll({
@@ -18,6 +48,7 @@ export class BicycleService {
     description?: string | null;
     price: number;
     stock: number;
+    weigth: number;
   }) {
     return Bicycle.create(data);
   }
@@ -30,6 +61,7 @@ export class BicycleService {
       description?: string | null;
       price?: number;
       stock?: number;
+      weigth?: number;
     }
   ) {
     return bicycle.update(data);

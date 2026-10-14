@@ -44,7 +44,7 @@ export class BicycleController {
     next: NextFunction
   ) {
     try {
-      const { brandId, model, description, price, stock } = req.body;
+      const { brandId, model, weigth,description, price, stock } = req.body;
 
       if (!brandId || !model || price === undefined) {
         res.status(400).json({
@@ -59,6 +59,7 @@ export class BicycleController {
         description,
         price,
         stock,
+        weigth
       });
 
       res.status(201).json(bicycle);
@@ -113,6 +114,46 @@ export class BicycleController {
       await BicycleService.delete(bicycle);
       res.status(204).send();
     } catch (error) {
+      next(error);
+    }
+  }
+
+  static async findAllWithBrandAndModel(
+    req: Request,
+    res: Response,
+    next: NextFunction
+
+  ){
+    try{
+      const bicycles = await BicycleService.findAllWithBrandAndModel();
+      res.json(bicycles);
+    } catch (error){
+      next(error);
+    }
+  }
+
+  static async findbyPriceAbove100(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ){
+    try{
+      const bicycles = await BicycleService.findByPriceAbove100();
+      res.json(bicycles);
+    }catch (error){
+      next(error);
+    }
+  }
+
+  static async findByPriceAndWeigth (
+   req: Request,
+    res: Response,
+    next: NextFunction
+  ){
+    try{
+      const bicycles = await BicycleService.findByPriceAndWeigth();
+      res.json(bicycles);
+    }catch (error){
       next(error);
     }
   }
